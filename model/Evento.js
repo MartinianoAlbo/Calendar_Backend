@@ -5,15 +5,15 @@ const { Schema } = mongoose;
 const eventSchema = new Schema({
     title:  {
       type: String,
-      required: true
+      require: true
     }, // String is shorthand for {type: String}
     start:{
       type: Date,
-      required: true,
+      require: true,
     },
     end:  {
       type: Date,
-      required: true
+      require: true
     },
     notes:  {
         type: String,
@@ -21,7 +21,7 @@ const eventSchema = new Schema({
     user: {
         type:Schema.Types.ObjectId, // esto es una referencia
         ref: 'User', // referencia a la coleccion de usuarios
-        required: true
+        require: true
     }
 });
 

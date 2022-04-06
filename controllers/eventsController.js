@@ -3,7 +3,8 @@ const Event = require('../model/Evento')
 
 
 const getEventos = async (req, res = response) => {
-  const event = await Event.find().populate('user') //rellena una referencia
+  const event = await Event.find().populate('user', 'id name')
+   //rellena una referencia
 
   res.json({
     ok: true,
