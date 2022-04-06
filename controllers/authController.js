@@ -64,12 +64,13 @@ const loginUsuario = async (req, res = response) => {
     }
 
     //Generar json web token
-    // const token = await generarJWT(user.id, user.name)
+     const token = await generarJWT(user.id, user.name)
 
     res.json({
       ok: true,
       uid: user.id,
       name: user.name,
+      token
       
     })
   } catch (error) {
