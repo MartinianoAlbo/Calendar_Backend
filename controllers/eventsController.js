@@ -3,7 +3,7 @@ const Event = require('../model/Evento')
 
 
 const getEventos = async (req, res = response) => {
-  const event = await Event.find().populate('user', 'id name')
+  const event = await Event.find().populate('user', 'name')
    //rellena una referencia
 
   res.json({
@@ -24,6 +24,7 @@ const crearEvento = async (req, res = response) => {
       ok: true,
       eventoGuardaro,
     })
+
   } catch (error) {
     console.log(error)
     res.status(500).json({

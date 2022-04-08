@@ -1,44 +1,46 @@
 const { response } = require('express')
 const User = require('../model/User')
-const bcrypt = require('bcryptjs')
 const { generarJWT } = require('../helpers/generarJwt');
+const bcrypt = require('bcryptjs')
 
 const crearUsuario = async (req, res = response) => {
-  const { email, password } = req.body
+  const {email} = req.body
 
-  
+  //Comprobar si existe el usuario con el email
+  const userExist = await User.findOne({ email })
+
+  if (userExist) {
+    return res.status(400).json({
+      ok: false,
+      msg: '❌ El usuario ya existe',
+    })
+  } 
+
   try {
-    let user = await User.findOne({ email })
+     //Crear nuevo usuario
+      const newUser = new User(req.body)
+    
+      console.log('sin id :',newUser);
 
-    if (user) {
-      return res.status(400).json({
-        ok: false,
-        msg: '❌ El usuario ya existe',
-      })
-    } 
+      const userSaved = await newUser.save()
 
-      user = new User(req.body)
-
-      //Encriptar pass
-      const salt = bcrypt.genSaltSync(10)
-      user.password = bcrypt.hashSync(password, salt)
-
-      await user.save()
-
-      console.log(user.id);
+      console.log(userSaved);
+    
       //Generar el json web token
-      const token = await generarJWT(user.id, user.name)
-
+      const token = await generarJWT(userSaved.id, userSaved.name)
+    
 
       res.status(201).json({
         ok: true,
-        uid: user.id,
-        name: user.name,
+        uid: userSaved.id,
+        name: userSaved.name,
+        email: userSaved.email,
         token
       })
     
   } catch (error) {
     console.log(error)
+
     res.status(500).json({
       ok: false,
       msg: 'error',
@@ -78,6 +80,7 @@ const loginUsuario = async (req, res = response) => {
       token,
     })
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       ok: false,
       msg: 'error',

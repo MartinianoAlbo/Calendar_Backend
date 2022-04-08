@@ -1,11 +1,13 @@
 const express = require('express')
-require('dotenv').config()
 const { dbConnection } = require('./db/configDb')
 const cors = require('cors')
 
 const app = express()
 
+app.use(express.json()); // siempre antes que se cargue el body parser
 
+
+require('dotenv').config()
 
 //Base de datos
 dbConnection()
@@ -24,15 +26,9 @@ const corsOption = {
     }
 }
 app.use(cors())
-
-//Parseo del body
-app.use(express.json()); // siempre antes que se cargue el body parser
-
 app.use(express.static('public'));
-
+//Parseo del body
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/events', require('./routes/eventsRoutes'));
-
-
 app.listen(process.env.PORT, () => console.log(`Servidor corriendo en puerto ${process.env.PORT}!`))
 

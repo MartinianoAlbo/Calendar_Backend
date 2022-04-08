@@ -1,34 +1,38 @@
 const mongoose = require('mongoose')
-const { Schema } = mongoose;
+const { Schema } = mongoose
 
-
-const eventSchema = new Schema({
-    title:  {
+const EventSchema = Schema(
+  {
+    title: {
       type: String,
-      require: true
+      require: true,
     }, // String is shorthand for {type: String}
-    start:{
+    start: {
       type: Date,
       require: true,
     },
-    end:  {
+    end: {
       type: Date,
-      require: true
+      require: true,
     },
-    notes:  {
-        type: String,
+    notes: {
+      type: String,
     },
     user: {
-        type:Schema.Types.ObjectId, // esto es una referencia
-        ref: 'User', // referencia a la coleccion de usuarios
-        require: true
-    }
-});
+      type: Schema.Types.ObjectId, // esto es una referencia
+      ref: 'User', // referencia a la coleccion de usuarios
+      require: true,
+    },
+  },
+  {
+    timestamps: true,
+  },
+)
 
-  eventSchema.method('toJSON', function() {
-    const { __v, _id, ...object } = this.toObject();
-    object.id = _id;
-    return object
-  });
-  
-  module.exports = mongoose.model('Event', eventSchema);
+EventSchema.method('toJSON', function () {
+  const { __v, _id, ...object } = this.toObject()
+  object.id = _id
+  return object
+})
+
+module.exports = mongoose.model('Event', EventSchema)
