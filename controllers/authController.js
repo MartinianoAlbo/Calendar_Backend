@@ -19,12 +19,8 @@ const crearUsuario = async (req, res = response) => {
   try {
      //Crear nuevo usuario
       const newUser = new User(req.body)
-    
-      console.log('sin id :',newUser);
 
       const userSaved = await newUser.save()
-
-      console.log(userSaved);
     
       //Generar el json web token
       const token = await generarJWT(userSaved.id, userSaved.name)
@@ -96,6 +92,8 @@ const revalidarToken = async (req, res = response) => {
 
   res.json({
     ok: true,
+    uid,
+    name,
     token,
   })
 }
