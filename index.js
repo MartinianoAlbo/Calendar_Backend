@@ -13,7 +13,7 @@ require('dotenv').config()
 dbConnection()
 
 //CORS
-const dominiosPermitidos = ['http://localhost:4000/api/auth/new']
+const dominiosPermitidos = ['http://localhost:4001/api/auth/new']
 const corsOption = {
     origin: (origin, callback) => {
         if (dominiosPermitidos.indexOf(origin) !== -1) {

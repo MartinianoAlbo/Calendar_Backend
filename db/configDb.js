@@ -8,13 +8,16 @@ const dbConnection = async () => {
       // autoIndex: true
     })
 
+
+
     const url = `${db.connection.host}:${db.connection.port}/${db.connection.name}`
     console.log(`Mongo DB conectado en ${url}`)
 
   } catch (error) {
     console.log(error)
+
     process.exit(1)
-    throw new Error('Error al conectar a la base de datos')
+
   }
 }
 
