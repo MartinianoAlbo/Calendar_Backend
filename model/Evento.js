@@ -5,15 +5,15 @@ const EventSchema = Schema(
   {
     title: {
       type: String,
-      require: true,
+      required: true,
     }, // String is shorthand for {type: String}
     start: {
       type: Date,
-      require: true,
+      required: true,
     },
     end: {
       type: Date,
-      require: true,
+      required: true,
     },
     notes: {
       type: String,
@@ -21,7 +21,7 @@ const EventSchema = Schema(
     user: {
       type: Schema.Types.ObjectId, // esto es una referencia
       ref: 'User', // referencia a la coleccion de usuarios
-      require: true,
+      required: true,
     },
   },
   {
